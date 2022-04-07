@@ -1,5 +1,5 @@
 import styles from "../styles/Index.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -43,11 +43,12 @@ export default function Home() {
       opacity: 1,
       x: 0,
       transition: {
-        // type: "spring",
+        type: "tween",
         // bounce: 0.1,
         // damping: 15,
         // stiffness: 130,
-        duration: 0.3,
+        ease: "easeOut",
+        duration: 0.2,
       },
     },
     originalOpacity: {
@@ -60,22 +61,24 @@ export default function Home() {
       // opacity: 0,
       x: "calc(-100% - 3em)",
       transition: {
-        // type: "spring",
+        type: "tween",
         // bounce: 0.1,
         // stiffness: 130,
         // damping: 15,
-        duration: 0.3,
+        ease: "easeOut",
+        duration: 0.2,
       },
     },
     moreShifted: {
       // opacity: 0,
       x: "calc(-200% - 6em)",
       transition: {
-        // type: "spring",
+        type: "tween",
         // bounce: 0.1,
         // damping: 15,
         // stiffness: 130,
-        duration: 0.3,
+        ease: "easeOut",
+        duration: 0.2,
       },
     },
   };
@@ -83,11 +86,22 @@ export default function Home() {
   const [isShifted, setIsShifted] = useState(false);
   const [isMoreShifted, setIsMoreShifted] = useState(false);
 
+  // isSubmitting for disabling the form submit until a response has been recieved by clicking submit once
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [submitData, setSubmitData] = useState({});
+  const [submitStatus, setSubmitStatus] = useState(false);
+
+  useEffect(() => {
+    // setSubmitData({ ok: "hi" });
+    console.log(submitData);
+  }, [submitStatus]);
+
   const box3SubmitHandler = (
     data
     // { name, username, email, password }
   ) => {
-    // setIsSubmitting(true); // Disables the form submit btn
+    setIsSubmitting(true); // Disables the form submit btn
     // toast.promise(
     //   dispatch(register(name, username, email, password)), // Dispatches the userinfo
     //   {
@@ -102,17 +116,39 @@ export default function Home() {
     //     },
     //   }
     // );
-    // setIsSubmitting(false); //enable the form submit btn again
-    console.log(data);
+    // setSubmitData((submitData) => submitData + data);
+    // console.log(submitData);
+    // console.log("ala");
+    // const newData = data;
+    setSubmitData((submitData) => ({
+      ...submitData,
+      ...data,
+    }));
+    setSubmitStatus(true);
+    setIsSubmitting(false); //enable the form submit btn again
+    // console.log(submitData);
   };
 
   const box1SubmitHandler = (data) => {
-    console.log(data);
+    // console.log(data);
+    // const newData = data;
+    // console.log(newData);
+    setSubmitData((submitData) => ({
+      ...submitData,
+      ...data,
+    }));
+    // console.log(submitData);
     setIsShifted((isShifted) => !isShifted);
   };
 
   const box2SubmitHandler = (data) => {
-    console.log(data);
+    // setSubmitData((submitData) => JSON.stringify(submitData + data));
+    // console.log(submitData);
+    // const newData = data;
+    setSubmitData((submitData) => ({
+      ...submitData,
+      ...data,
+    }));
     setIsMoreShifted((isMoreShifted) => !isMoreShifted);
   };
 
@@ -128,14 +164,14 @@ export default function Home() {
               passingYear: "",
             }}
             onSubmit={box3SubmitHandler}
-            validationSchema={box3ValidationSchema}
+            // validationSchema={box3ValidationSchema}
           >
             {({
               handleChange,
               errors,
               setFieldTouched,
               touched,
-              handleSubmit,
+              handleSubmit = handleBox3Submit,
             }) => {
               return (
                 <Form className={styles.form}>
@@ -147,7 +183,7 @@ export default function Home() {
                       confirmPassword: "",
                     }}
                     onSubmit={box1SubmitHandler}
-                    validationSchema={box1ValidationSchema}
+                    // validationSchema={box1ValidationSchema}
                   >
                     {({
                       handleChange,
@@ -255,7 +291,7 @@ export default function Home() {
                       country: "",
                     }}
                     onSubmit={box2SubmitHandler}
-                    validationSchema={box2ValidationSchema}
+                    // validationSchema={box2ValidationSchema}
                   >
                     {({
                       handleChange,
@@ -376,14 +412,6 @@ export default function Home() {
                       Education
                     </h2>
                     <br />
-                    {/* <input
-                      type="text"
-                      name="username"
-                      placeholder="username"
-                      onBlur={() => setFieldTouched("username")}
-                      required
-                      onChange={handleChange("username")}
-                    /> */}
                     <div
                       style={{
                         display: "flex",
@@ -405,21 +433,20 @@ export default function Home() {
                             height: "15px",
                             width: "15px",
                             marginRight: "0.5em",
-                            // border: "1px solid black",
-                            verticalAlign: "middle",
                           }}
                         />
                         Graduate
                       </label>
                       <label>
                         <Field
+                          id="radioField"
                           type="radio"
                           name="education"
                           value="HighSchool"
                           style={{
                             height: "15px",
                             width: "15px",
-                            verticalAlign: "middle",
+                            marginRight: "0.5em",
                           }}
                         />
                         HighSchool
@@ -474,7 +501,7 @@ export default function Home() {
                       <button
                         className={styles.submitBtn}
                         type="submit"
-                        // disabled={isSubmitting}
+                        disabled={isSubmitting}
                         onClick={handleSubmit}
                       >
                         Submit
