@@ -181,3 +181,20 @@
   background-color: #2d4168;
   /* color: black; */
 }
+
+/* -------------------------------------- EXPLORE PAGE ---------------------------------------------- */
+.exploreFlex {
+  display: flex;
+}
+
+.filterSideBarContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+@media (min-width: 1280px) {
+  .filterSideBarContainer {
+    min-width: 300px;
+  }
+}
