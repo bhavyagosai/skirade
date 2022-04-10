@@ -220,11 +220,48 @@
 .filterSideBarContainer {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  max-width: 400px;
+  padding-left: 5.5rem;
+  padding-top: 2rem;
 }
 
 @media (min-width: 1280px) {
   .filterSideBarContainer {
     min-width: 300px;
   }
+}
+
+.multiSelectFilter {
+  margin-top: 20px;
+}
+
+.filterApplyBtn {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 15px;
+  background-color: #2d4168;
+  color: white;
+  border-radius: 7px;
+  width: 110px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.filterApplyBtn:hover {
+  cursor: pointer;
+  background-color: #3e5a92;
+}
+
+.filterFooter {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.filterFooter p {
+  margin-left: 20px;
+}
+
+.filterFooter p:hover {
+  cursor: pointer;
 }

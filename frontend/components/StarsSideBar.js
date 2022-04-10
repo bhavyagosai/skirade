@@ -1,7 +1,7 @@
 import React from 'react';
 
 function StarsSideBar() {
-  return <div>StarsSideBar</div>;
+  return <div></div>;
 }
 
 export default StarsSideBar;

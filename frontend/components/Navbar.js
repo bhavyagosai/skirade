@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Navbar() {
   return (
@@ -7,7 +7,7 @@ export default function Navbar() {
       <nav>
         <Link href="/">
           <a>
-            <Image src="/logo.svg" alt="Skirade Logo" width={250} height={30} />
+            <Image src="/logo.svg" alt="Skirade Logo" width={200} height={24} />
           </a>
         </Link>
         <ul>
