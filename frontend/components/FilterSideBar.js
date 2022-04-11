@@ -31,6 +31,12 @@ function FilterSideBar() {
     { label: '6 Month', value: 3 },
   ];
 
+  const university = [
+    { label: 'Charusat University, Anand', value: 1 },
+    { label: 'VIT Chennai', value: 2 },
+    { label: 'IIT London', value: 3 },
+    { label: 'NIT Surat', value: 4 },
+  ];
   const [selectedRoles, setSelectedRoles] = useState(null);
 
   const [selectedSkills, setSelectedSkills] = useState(null);
@@ -38,6 +44,8 @@ function FilterSideBar() {
   const [selectedExperience, setSelectedExperience] = useState(null);
 
   const [selectedDuration, setSelectedDuration] = useState(null);
+
+  const [selectedUniversity, setSelectedUniversity] = useState(null);
 
   const rolesFilterUpdate = (e) => {
     setSelectedRoles(Array.isArray(e) ? e.map((x) => x.value) : []);
@@ -55,14 +63,20 @@ function FilterSideBar() {
     setSelectedDuration(Array.isArray(e) ? e.map((x) => x.value) : []);
   };
 
+  const universityFilterUpdate = (e) => {
+    setSelectedUniversity(Array.isArray(e) ? e.map((x) => x.value) : []);
+  };
+
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
       color: '#2d4168',
+      width: '20vw',
       padding: 10,
     }),
     control: () => ({
       // none of react-select's styles are passed to <Control />
+      width: '20vw',
       display: 'flex',
       padding: '10px',
       color: '#2d4168',
@@ -82,11 +96,12 @@ function FilterSideBar() {
       <hr
         style={{
           marginTop: '20px',
-          width: '100%',
+          width: '20vw',
           height: '1px',
           border: 'none',
           color: '#e5e5e5',
           backgroundColor: '#e5e5e5',
+          margin: '0px',
         }}
       />
       <div className={styles.multiSelectFilter}>
@@ -136,6 +151,18 @@ function FilterSideBar() {
           className="multi-select-filter"
           classNamePrefix="selectPrefix"
           placeholder="1 Month, 3 Month..."
+          styles={customStyles}
+        />
+      </div>
+      <div className={styles.multiSelectFilter}>
+        <p style={{ fontSize: '1.3rem', fontWeight: '400' }}>University</p>
+        <Select
+          name="label"
+          options={university}
+          onChange={universityFilterUpdate}
+          className="multi-select-filter"
+          classNamePrefix="selectPrefix"
+          placeholder="Charusat University..."
           styles={customStyles}
         />
       </div>
