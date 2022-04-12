@@ -25,6 +25,14 @@ const registerMutation = gql`
       id
       username
       email
+      name
+      age
+      city
+      country
+      education
+      institution
+      degree
+      passingYear
       token
       createdAt
     }
@@ -49,15 +57,39 @@ export default function Signup() {
   const [submitData, setSubmitData] = useState({});
   const [submitStatus, setSubmitStatus] = useState(false);
 
-  useEffect(() => {
-    console.log("ok");
-  }, []);
-
-  // useEffect(() => {
-
-  // }, [submitStatus]);
-
   const [register, { registerError }] = useMutation(registerMutation);
+
+  useEffect(() => {
+    if (submitStatus) {
+      console.log(submitData);
+      register({
+        variables: {
+          registerInput: {
+            username: submitData.username,
+            email: submitData.email,
+            password: submitData.password,
+            confirmPassword: submitData.confirmPassword,
+            name: submitData.name,
+            age: submitData.age,
+            city: submitData.city,
+            country: submitData.country,
+            education: submitData.education,
+            institution: submitData.institution,
+            degree: submitData.degree,
+            passingYear: submitData.passingYear,
+          },
+        },
+      })
+        .then((returnData) => {
+          console.log(returnData);
+          setIsSubmitting(false); //enable the form submit btn again
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(registerError);
+        });
+    }
+  }, [submitStatus]);
 
   // const { loading, error, userData } = useQuery(registerMutation);
 
@@ -152,10 +184,7 @@ export default function Signup() {
     setIsMoreShifted((isMoreShifted) => !isMoreShifted);
   };
 
-  const box3SubmitHandler = (
-    data
-    // { name, username, email, password }
-  ) => {
+  const box3SubmitHandler = (data) => {
     setIsSubmitting(true); // Disables the form submit btn
 
     // toast.promise(
@@ -180,32 +209,10 @@ export default function Signup() {
       ...submitData,
       ...data,
     }));
+
+    // setTimeout(() => {
     setSubmitStatus(true);
-
-    setTimeout(() => {
-      console.log(submitData);
-    }, 1000);
-
-    register({
-      variables: {
-        registerInput: {
-          username: submitData.username,
-          email: submitData.email,
-          password: submitData.password,
-          confirmPassword: submitData.confirmPassword,
-        },
-      },
-    })
-      .then((returnData) => {
-        console.log(returnData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    setIsSubmitting(false); //enable the form submit btn again
-
-    // console.log(submitData);
+    // }, 1000);
   };
 
   return (
@@ -542,7 +549,7 @@ export default function Signup() {
                     <input
                       type="text"
                       name="passingYear"
-                      placeholder="passingYear"
+                      placeholder="passing year"
                       onBlur={() => setFieldTouched("passingYear")}
                       required
                       onChange={handleChange("passingYear")}
