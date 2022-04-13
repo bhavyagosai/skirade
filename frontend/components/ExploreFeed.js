@@ -58,7 +58,7 @@ function ExploreFeed({ starredPostId, setStarredPostId }) {
     <div className={styles.postsContainer}>
       {posts.map((post) => (
         <PostCard
-          key={post.id}
+          key={post.id.toString()}
           postId={post.id}
           profileImg={post.profileImg}
           name={post.name}
