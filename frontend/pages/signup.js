@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
@@ -12,7 +13,100 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatElement from "../components/ChatElement";
 import FormError from "../components/FormError";
 
-export default function Home() {
+const registerMutation = gql`
+  mutation register($registerInput: RegisterInput) {
+    register(registerInput: $registerInput) {
+      #     username: "bhavyagosai"
+      #     password: "bhavya69"
+      #     confirmPassword: "bhavya69"
+      #     email: "rajkalp.bhavya@gmail.com"
+      #   }
+      # ) {
+      id
+      username
+      email
+      name
+      age
+      city
+      country
+      education
+      institution
+      degree
+      passingYear
+      token
+      createdAt
+    }
+  }
+  # {
+  #   getUsers {
+  #     username
+  #     id
+  #     email
+  #     createdAt
+  #   }
+  # }
+`;
+
+export default function Signup() {
+  const [isShifted, setIsShifted] = useState(false);
+  const [isMoreShifted, setIsMoreShifted] = useState(false);
+
+  // isSubmitting for disabling the form submit until a response has been recieved by clicking submit once
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [submitData, setSubmitData] = useState({});
+  const [submitStatus, setSubmitStatus] = useState(false);
+
+  const [register, { registerError }] = useMutation(registerMutation);
+
+  useEffect(() => {
+    if (submitStatus) {
+      console.log(submitData);
+      register({
+        variables: {
+          registerInput: {
+            username: submitData.username,
+            email: submitData.email,
+            password: submitData.password,
+            confirmPassword: submitData.confirmPassword,
+            name: submitData.name,
+            age: submitData.age,
+            city: submitData.city,
+            country: submitData.country,
+            education: submitData.education,
+            institution: submitData.institution,
+            degree: submitData.degree,
+            passingYear: submitData.passingYear,
+          },
+        },
+      })
+        .then((returnData) => {
+          console.log(returnData);
+          setIsSubmitting(false); //enable the form submit btn again
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(registerError);
+        });
+    }
+  }, [submitStatus]);
+
+  // const { loading, error, userData } = useQuery(registerMutation);
+
+  // console.log("DATA: \n" + JSON.stringify(userData));
+
+  // if (loading) console.log("LOADING: " + loading);
+
+  // if (error) console.log("ERROR: " + error);
+
+  // const { loading, error, userData } = useMutation(registerMutation);
+
+  // console.log("DATA: \n" + JSON.stringify(userData));
+
+  // if (loading) console.log("LOADING: " + loading);
+
+  // if (error) console.log("ERROR: " + error);
+
   // Yup validation for login info
   const box1ValidationSchema = Yup.object().shape({
     username: Yup.string().required().label("Username"),
@@ -44,9 +138,6 @@ export default function Home() {
       x: 0,
       transition: {
         type: "tween",
-        // bounce: 0.1,
-        // damping: 15,
-        // stiffness: 130,
         ease: "easeOut",
         duration: 0.2,
       },
@@ -62,9 +153,6 @@ export default function Home() {
       x: "calc(-100% - 3em)",
       transition: {
         type: "tween",
-        // bounce: 0.1,
-        // stiffness: 130,
-        // damping: 15,
         ease: "easeOut",
         duration: 0.2,
       },
@@ -74,34 +162,31 @@ export default function Home() {
       x: "calc(-200% - 6em)",
       transition: {
         type: "tween",
-        // bounce: 0.1,
-        // damping: 15,
-        // stiffness: 130,
         ease: "easeOut",
         duration: 0.2,
       },
     },
   };
 
-  const [isShifted, setIsShifted] = useState(false);
-  const [isMoreShifted, setIsMoreShifted] = useState(false);
+  const box1SubmitHandler = (data) => {
+    setSubmitData((submitData) => ({
+      ...submitData,
+      ...data,
+    }));
+    setIsShifted((isShifted) => !isShifted);
+  };
 
-  // isSubmitting for disabling the form submit until a response has been recieved by clicking submit once
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const box2SubmitHandler = (data) => {
+    setSubmitData((submitData) => ({
+      ...submitData,
+      ...data,
+    }));
+    setIsMoreShifted((isMoreShifted) => !isMoreShifted);
+  };
 
-  const [submitData, setSubmitData] = useState({});
-  const [submitStatus, setSubmitStatus] = useState(false);
-
-  useEffect(() => {
-    // setSubmitData({ ok: "hi" });
-    console.log(submitData);
-  }, [submitStatus]);
-
-  const box3SubmitHandler = (
-    data
-    // { name, username, email, password }
-  ) => {
+  const box3SubmitHandler = (data) => {
     setIsSubmitting(true); // Disables the form submit btn
+
     // toast.promise(
     //   dispatch(register(name, username, email, password)), // Dispatches the userinfo
     //   {
@@ -124,32 +209,10 @@ export default function Home() {
       ...submitData,
       ...data,
     }));
+
+    // setTimeout(() => {
     setSubmitStatus(true);
-    setIsSubmitting(false); //enable the form submit btn again
-    // console.log(submitData);
-  };
-
-  const box1SubmitHandler = (data) => {
-    // console.log(data);
-    // const newData = data;
-    // console.log(newData);
-    setSubmitData((submitData) => ({
-      ...submitData,
-      ...data,
-    }));
-    // console.log(submitData);
-    setIsShifted((isShifted) => !isShifted);
-  };
-
-  const box2SubmitHandler = (data) => {
-    // setSubmitData((submitData) => JSON.stringify(submitData + data));
-    // console.log(submitData);
-    // const newData = data;
-    setSubmitData((submitData) => ({
-      ...submitData,
-      ...data,
-    }));
-    setIsMoreShifted((isMoreShifted) => !isMoreShifted);
+    // }, 1000);
   };
 
   return (
@@ -486,7 +549,7 @@ export default function Home() {
                     <input
                       type="text"
                       name="passingYear"
-                      placeholder="passingYear"
+                      placeholder="passing year"
                       onBlur={() => setFieldTouched("passingYear")}
                       required
                       onChange={handleChange("passingYear")}

@@ -86,10 +86,38 @@ module.exports = {
 
     async register(
       _,
-      { registerInput: { username, email, password, confirmPassword } }
+      {
+        registerInput: {
+          username,
+          email,
+          password,
+          confirmPassword,
+          name,
+          age,
+          city,
+          country,
+          education,
+          institution,
+          degree,
+          passingYear,
+        },
+      }
     ) {
       if (
-        !validateRegisterInput(username, email, password, confirmPassword).valid
+        !validateRegisterInput(
+          username,
+          email,
+          password,
+          confirmPassword,
+          name,
+          age,
+          city,
+          country,
+          education,
+          institution,
+          degree,
+          passingYear
+        ).valid
       )
         throw new UserInputError(
           "Error(s) encountered while registering the user",
@@ -97,7 +125,15 @@ module.exports = {
             username,
             email,
             password,
-            confirmPassword
+            confirmPassword,
+            name,
+            age,
+            city,
+            country,
+            education,
+            institution,
+            degree,
+            passingYear
           ).errors
         );
       if (await User.findOne({ username })) {
@@ -114,6 +150,14 @@ module.exports = {
         username,
         password,
         email,
+        name,
+        age,
+        city,
+        country,
+        education,
+        institution,
+        degree,
+        passingYear,
         createdAt: new Date().toISOString(),
       });
 

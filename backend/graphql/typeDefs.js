@@ -6,6 +6,14 @@ module.exports = gql`
     email: String!
     token: String!
     username: String!
+    name: String!
+    age: Int!
+    city: String!
+    country: String!
+    education: String!
+    institution: String!
+    degree: String!
+    passingYear: Int!
     createdAt: String!
   }
   input RegisterInput {
@@ -13,6 +21,14 @@ module.exports = gql`
     email: String!
     password: String!
     confirmPassword: String!
+    name: String!
+    age: String!
+    city: String!
+    country: String!
+    education: String!
+    institution: String!
+    degree: String!
+    passingYear: String!
   }
   type Query {
     sayHi: String!
@@ -21,7 +37,7 @@ module.exports = gql`
     persistentLogin: Boolean!
   }
   type Mutation {
-    register(registerInput: RegisterInput): User!
+    register(registerInput: RegisterInput): User
     login(username: String!, password: String!): User!
   }
 `;
