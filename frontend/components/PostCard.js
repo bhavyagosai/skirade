@@ -90,7 +90,7 @@ function PostCard({
         <div className={styles.postAttribRow}>
           <div className={styles.postAttribItem}>
             <p>Skills</p>
-            <p>{skills.toString()}</p>
+            <p>{skills.join(', ')}</p>
           </div>
           <div className={styles.postAttribItem}>
             <p>Duration</p>
