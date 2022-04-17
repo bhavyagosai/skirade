@@ -48,8 +48,6 @@ module.exports = {
     },
     async persistentLogin(_, {}, context) {
       const user = checkAuth(context);
-      console.log(user);
-
       if (user) return true;
       else return false;
     },

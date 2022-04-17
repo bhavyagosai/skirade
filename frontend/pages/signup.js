@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -13,15 +14,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatElement from "../components/ChatElement";
 import FormError from "../components/FormError";
 
-const registerMutation = gql`
+const REGISTER_USER = gql`
   mutation register($registerInput: RegisterInput) {
     register(registerInput: $registerInput) {
-      #     username: "bhavyagosai"
-      #     password: "bhavya69"
-      #     confirmPassword: "bhavya69"
-      #     email: "rajkalp.bhavya@gmail.com"
-      #   }
-      # ) {
       id
       username
       email
@@ -48,6 +43,7 @@ const registerMutation = gql`
 `;
 
 export default function Signup() {
+  const router = useRouter();
   const [isShifted, setIsShifted] = useState(false);
   const [isMoreShifted, setIsMoreShifted] = useState(false);
 
@@ -57,11 +53,28 @@ export default function Signup() {
   const [submitData, setSubmitData] = useState({});
   const [submitStatus, setSubmitStatus] = useState(false);
 
-  const [register, { registerError }] = useMutation(registerMutation);
+  // const { loading, error, userData } = useQuery(REGISTER_USER);
+
+  const [register, { error, data, loading }] = useMutation(REGISTER_USER, {
+    onError: (error) => {
+      console.log(error);
+    },
+    onCompleted: (data) => {
+      console.log("User Registered\n" + JSON.stringify(data));
+      setIsSubmitting(false); //enable the form submit btn again
+      localStorage.setItem("UserData", JSON.stringify(data));
+      router.push("/");
+    },
+    // update: (proxy, mutationResult) => {
+    //   if (mutationResult) console.log("User Registered2\n" + data);
+
+    //   // console.log("mutationResult: ", mutationResult);
+    // },
+  });
 
   useEffect(() => {
     if (submitStatus) {
-      console.log(submitData);
+      // console.log(submitData);
       register({
         variables: {
           registerInput: {
@@ -80,32 +93,14 @@ export default function Signup() {
           },
         },
       })
-        .then((returnData) => {
-          console.log(returnData);
-          setIsSubmitting(false); //enable the form submit btn again
+        .then(() => {
+          // localStorage.setItem("UserData", JSON.parse(data));
         })
         .catch((error) => {
           console.log(error);
-          console.log(registerError);
         });
     }
   }, [submitStatus]);
-
-  // const { loading, error, userData } = useQuery(registerMutation);
-
-  // console.log("DATA: \n" + JSON.stringify(userData));
-
-  // if (loading) console.log("LOADING: " + loading);
-
-  // if (error) console.log("ERROR: " + error);
-
-  // const { loading, error, userData } = useMutation(registerMutation);
-
-  // console.log("DATA: \n" + JSON.stringify(userData));
-
-  // if (loading) console.log("LOADING: " + loading);
-
-  // if (error) console.log("ERROR: " + error);
 
   // Yup validation for login info
   const box1ValidationSchema = Yup.object().shape({
