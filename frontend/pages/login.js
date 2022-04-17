@@ -1,18 +1,12 @@
 import styles from "../styles/Index.module.css";
-import { useEffect, useState } from "react";
-import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { Formik, Form, Field } from "formik";
+import { gql, useMutation } from "@apollo/client";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { motion } from "framer-motion";
-import { faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ChatElement from "../components/ChatElement";
 import FormError from "../components/FormError";
+import AppContext from "../components/AppContext";
 
 const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
@@ -40,6 +34,8 @@ export default function Login() {
   // isSubmitting for disabling the form submit until a response has been recieved by clicking submit once
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { user, dispatch } = React.useContext(AppContext);
+
   const [login, { error, data, loading }] = useMutation(LOGIN_USER, {
     onError: (error) => {
       console.log(error);
@@ -49,6 +45,9 @@ export default function Login() {
       console.log("User Logged in!\n" + JSON.stringify(data));
       setIsSubmitting(false); //enable the form submit btn again
       localStorage.setItem("UserData", JSON.stringify(data));
+      dispatch({
+        type: "AUTH_STATE_CHANGE",
+      });
       router.push("/");
     },
   });

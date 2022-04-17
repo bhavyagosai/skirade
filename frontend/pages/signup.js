@@ -1,8 +1,5 @@
 import styles from "../styles/Index.module.css";
-import { useEffect, useState } from "react";
-import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Formik, Form, Field } from "formik";
@@ -11,8 +8,8 @@ import { motion } from "framer-motion";
 import { faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ChatElement from "../components/ChatElement";
 import FormError from "../components/FormError";
+import AppContext from "../components/AppContext";
 
 const REGISTER_USER = gql`
   mutation register($registerInput: RegisterInput) {
@@ -32,14 +29,6 @@ const REGISTER_USER = gql`
       createdAt
     }
   }
-  # {
-  #   getUsers {
-  #     username
-  #     id
-  #     email
-  #     createdAt
-  #   }
-  # }
 `;
 
 export default function Signup() {
@@ -53,7 +42,7 @@ export default function Signup() {
   const [submitData, setSubmitData] = useState({});
   const [submitStatus, setSubmitStatus] = useState(false);
 
-  // const { loading, error, userData } = useQuery(REGISTER_USER);
+  const { user, dispatch } = React.useContext(AppContext);
 
   const [register, { error, data, loading }] = useMutation(REGISTER_USER, {
     onError: (error) => {
@@ -63,13 +52,11 @@ export default function Signup() {
       console.log("User Registered\n" + JSON.stringify(data));
       setIsSubmitting(false); //enable the form submit btn again
       localStorage.setItem("UserData", JSON.stringify(data));
+      dispatch({
+        type: "AUTH_STATE_CHANGE",
+      });
       router.push("/");
     },
-    // update: (proxy, mutationResult) => {
-    //   if (mutationResult) console.log("User Registered2\n" + data);
-
-    //   // console.log("mutationResult: ", mutationResult);
-    // },
   });
 
   useEffect(() => {
@@ -92,13 +79,9 @@ export default function Signup() {
             passingYear: submitData.passingYear,
           },
         },
-      })
-        .then(() => {
-          // localStorage.setItem("UserData", JSON.parse(data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }, [submitStatus]);
 
@@ -181,33 +164,11 @@ export default function Signup() {
 
   const box3SubmitHandler = (data) => {
     setIsSubmitting(true); // Disables the form submit btn
-
-    // toast.promise(
-    //   dispatch(register(name, username, email, password)), // Dispatches the userinfo
-    //   {
-    //     loading: "Signing you up...", //when signing up
-    //     success: "Sign Up Success! Redirecting...", //if signup is success
-    //     error: error || "User Already Exist", //if signup fails
-    //   },
-    //   {
-    //     style: {
-    //       fontFamily: "Monospace",
-    //       marginTop: "15px",
-    //     },
-    //   }
-    // );
-    // setSubmitData((submitData) => submitData + data);
-    // console.log(submitData);
-    // console.log("ala");
-    // const newData = data;
     setSubmitData((submitData) => ({
       ...submitData,
       ...data,
     }));
-
-    // setTimeout(() => {
     setSubmitStatus(true);
-    // }, 1000);
   };
 
   return (
