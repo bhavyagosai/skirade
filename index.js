@@ -26,7 +26,7 @@ const server = new ApolloServer({
   // },
   typeDefs,
   resolvers,
-  conte1xt: ({ req }) => ({ req }),
+  context: ({ req }) => ({ req }),
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
 });
 

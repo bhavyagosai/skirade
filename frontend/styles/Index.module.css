@@ -152,13 +152,16 @@
   cursor: pointer;
 }
 
-.form h2 {
+.form h2,
+.loginForm h2 {
   font-size: 1.6em;
   font-weight: 700;
 }
 
 .form input,
-.form select {
+.loginForm input,
+.form select,
+.loginForm select {
   margin: 10px 0;
   width: 100%;
   background: #f4f7fe;
@@ -170,7 +173,8 @@
   font-size: 1.1em;
 }
 
-.form label {
+.form label,
+.loginForm label {
   display: flex;
   align-items: center;
   font-size: 1.1em;
@@ -180,7 +184,9 @@
 }
 
 .form input:focus,
-.form select:focus {
+.loginForm input:focus,
+.form select:focus,
+.loginForm input:focus {
   outline: none;
 }
 
