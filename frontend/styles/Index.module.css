@@ -244,7 +244,7 @@
   color: white;
   border-radius: 7px;
   width: 110px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .filterApplyBtn:hover {
@@ -440,5 +440,103 @@
 }
 
 .starredPostList p:hover {
+  cursor: pointer;
+}
+
+/* ---------------------------- CREATE POST FORM ------------------- */
+.createPostContainer {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.createPostCard {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 0.7rem;
+  box-shadow: 12px 21px 41px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+  width: 45rem;
+  height: fit-content;
+  margin-top: 30px;
+}
+
+.createPostCard h1 {
+  margin-bottom: 15px;
+}
+
+.createPostForm form {
+  display: flex;
+  flex-direction: column;
+}
+
+.createPostFormInput {
+  font-family: "Montserrat", sans-serif;
+  margin: 10px 0;
+  width: 100%;
+  background: #f4f7fe;
+  color: #7a7a7a;
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 1.1em;
+}
+
+.createPostForm textarea {
+  font-family: "Montserrat", sans-serif;
+  margin: 10px 0;
+  width: 100%;
+  background: #f4f7fe;
+  color: #7a7a7a;
+  border: none;
+  height: 5rem;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 1.1em;
+}
+
+.createPostFormInput::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-family: "Montserrat", sans-serif;
+  color: gray;
+  opacity: 1; /* Firefox */
+}
+
+.createPostFormInput:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: gray;
+}
+
+.createPostFormInput::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: gray;
+}
+
+.formError {
+  font-size: 0.8rem;
+  color: rgb(255, 89, 89);
+}
+
+.createPostSubmitBtn {
+  width: 15%;
+  color: white;
+  box-shadow: none;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #2d4168;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: 500;
+  border-radius: 5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.createPostSubmitBtn:hover {
+  background-color: #4967a3;
   cursor: pointer;
 }
