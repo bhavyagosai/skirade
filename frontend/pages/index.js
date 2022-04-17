@@ -7,39 +7,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 
 import ChatElement from "../components/ChatElement";
 
-const CHECK_AUTH_STATE = gql`
-  {
-    persistentLogin
-  }
-`;
-
 export default function Home() {
-  const [authToken, setAuthToken] = useState("");
-  const [authState, setAuthState] = useState(false);
-  useEffect(() => {
-    setAuthToken(
-      JSON.parse(localStorage.getItem("UserData")).register
-        ? JSON.parse(localStorage.getItem("UserData")).register.token
-        : JSON.parse(localStorage.getItem("UserData")).login.token
-    );
-  }, []);
-
-  const { loading, error, data } = useQuery(CHECK_AUTH_STATE, {
-    skip: authToken ? false : true,
-    context: {
-      headers: {
-        authorization: `Bearer ${authToken}`,
-      },
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-    onCompleted: (authState) => {
-      console.log(authState.persistentLogin);
-
-    },
-  });
-
   return (
     <div className={styles.container}>
       <Head>
