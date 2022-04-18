@@ -13,6 +13,7 @@ const userSchema = new Schema({
   degree: String,
   passingYear: Number,
   createdAt: String,
+  profileImage: String,
 });
 
 module.exports = model("User", userSchema);

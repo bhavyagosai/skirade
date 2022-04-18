@@ -27,6 +27,7 @@ const REGISTER_USER = gql`
       passingYear
       token
       createdAt
+      profileImage
     }
   }
 `;
@@ -49,11 +50,13 @@ export default function Signup() {
       console.log(error);
     },
     onCompleted: (data) => {
-      console.log("User Registered\n" + JSON.stringify(data));
+      console.log("User Registered!");
+      // console.log("User Registered\n" + JSON.stringify(data));
       setIsSubmitting(false); //enable the form submit btn again
       localStorage.setItem("UserData", JSON.stringify(data));
       dispatch({
         type: "AUTH_STATE_CHANGE",
+        loggedIn: true,
       });
       router.push("/");
     },

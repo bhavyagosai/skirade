@@ -157,6 +157,7 @@ module.exports = {
         degree,
         passingYear,
         createdAt: new Date().toISOString(),
+        profileImage: `https://avatars.dicebear.com/api/micah/${username}.svg`,
       });
 
       const res = await newUser.save();

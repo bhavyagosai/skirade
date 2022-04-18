@@ -15,6 +15,7 @@ module.exports = gql`
     degree: String!
     passingYear: Int!
     createdAt: String!
+    profileImage: String!
   }
   input RegisterInput {
     username: String!

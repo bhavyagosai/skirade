@@ -74,6 +74,8 @@ header nav {
 
 header nav ul {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .profileImage {
@@ -86,6 +88,7 @@ header nav ul li:hover {
 }
 
 header nav ul:nth-child(3) li {
+  cursor: pointer;
   padding: 0 10px;
 }
 

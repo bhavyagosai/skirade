@@ -24,6 +24,7 @@ const LOGIN_USER = gql`
       passingYear
       token
       createdAt
+      profileImage
     }
   }
 `;
@@ -42,11 +43,13 @@ export default function Login() {
       setIsSubmitting(false); //enable the form submit btn again
     },
     onCompleted: (data) => {
-      console.log("User Logged in!\n" + JSON.stringify(data));
+      console.log("User Logged in!");
+      // console.log("User Logged in!\n" + JSON.stringify(data));
       setIsSubmitting(false); //enable the form submit btn again
       localStorage.setItem("UserData", JSON.stringify(data));
       dispatch({
         type: "AUTH_STATE_CHANGE",
+        loggedIn: true,
       });
       router.push("/");
     },

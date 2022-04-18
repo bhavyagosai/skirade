@@ -32,26 +32,26 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "AUTH_STATE_CHANGE":
       const newState = state;
-      newState.loggedIn =
-        typeof window !== "undefined"
-          ? localStorage.getItem("UserData")
-            ? checkAuth(
-                JSON.parse(localStorage.getItem("UserData")).register
-                  ? JSON.parse(localStorage.getItem("UserData")).register.token
-                  : JSON.parse(localStorage.getItem("UserData")).login.token
-              )
-              ? true
-              : false
-            : false
-          : false;
-
-      if (newState.loggedIn === false) {
-        if (localStorage.getItem("UserData"))
+      if (newState.loggedIn === true && action.loggedIn === false) {
+        newState.loggedIn = false;
+        if (localStorage.getItem("UserData")) {
           localStorage.removeItem("UserData");
+        }
+      } else {
+        newState.loggedIn =
+          typeof window !== "undefined"
+            ? localStorage.getItem("UserData")
+              ? checkAuth(
+                  JSON.parse(localStorage.getItem("UserData")).register
+                    ? JSON.parse(localStorage.getItem("UserData")).register
+                        .token
+                    : JSON.parse(localStorage.getItem("UserData")).login.token
+                )
+                ? true
+                : false
+              : false
+            : false;
       }
-      // const { planetName } = action;
-      // newState.find((planet) => planetName === planet.name).occupied =
-      //   action.occupied;
       return newState;
     default:
       return state;

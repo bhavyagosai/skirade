@@ -5,7 +5,7 @@ const {
 
 module.exports = (context) => {
   // context = { ... headers }
-  const authHeader = `Bearer ${context}`;
+  const authHeader = "Bearer " + context;
   if (authHeader) {
     // Bearer ....
     const token = authHeader.split("Bearer ")[1];
@@ -17,10 +17,10 @@ module.exports = (context) => {
         );
         return user;
       } catch (err) {
-        throw new Error("Invalid/Expired token");
+        console.error("Invalid/Expired token");
       }
     }
-    throw new Error("Authentication token must be 'Bearer [token]");
+    console.error("Authentication token must be Bearer [token]");
   }
-  throw new Error("Authorization header must be provided");
+  console.error("Authorization header must be provided");
 };
