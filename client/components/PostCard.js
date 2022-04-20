@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import styles from '../styles/Index.module.css';
+import React, { useEffect, useState } from "react";
+import styles from "../styles/Index.module.css";
 import {
   ChatAltIcon,
   StarIcon as StarIconSolid,
   LocationMarkerIcon,
-} from '@heroicons/react/solid';
-import { StarIcon as StarIconOutline } from '@heroicons/react/outline';
+} from "@heroicons/react/solid";
+import { StarIcon as StarIconOutline } from "@heroicons/react/outline";
 
 function PostCard({
   postId,
@@ -28,13 +28,13 @@ function PostCard({
 
   const handleStar = (id) => {
     setUserStarredPosts((arr) => [...arr, id]);
-    console.log('Starred Post', id);
+    console.log("Starred Post", id);
     // MAKE API CALL FOR STARRING UPDATE IN DB AS WELL
   };
 
   const handleUnstar = (id) => {
     setUserStarredPosts(userStarredPosts.filter((item) => item !== id));
-    console.log('UnStarred Post', id);
+    console.log("UnStarred Post", id);
     // MAKE API CALL FOR STARRING UPDATE IN DB AS WELL
   };
   useEffect(() => {
@@ -53,20 +53,20 @@ function PostCard({
           <StarIconSolid
             onClick={() => handleUnstar(postId)}
             style={{
-              height: '1rem',
-              position: 'absolute',
-              right: '0px',
-              top: '10px',
+              height: "1rem",
+              position: "absolute",
+              right: "0px",
+              top: "10px",
             }}
           />
         ) : (
           <StarIconOutline
             onClick={() => handleStar(postId)}
             style={{
-              height: '1rem',
-              position: 'absolute',
-              right: '0px',
-              top: '10px',
+              height: "1rem",
+              position: "absolute",
+              right: "0px",
+              top: "10px",
             }}
           />
         )}
@@ -90,11 +90,11 @@ function PostCard({
         <div className={styles.postAttribRow}>
           <div className={styles.postAttribItem}>
             <p>Skills</p>
-            <p>{skills.join(', ')}</p>
+            <p>{skills.join(", ")}</p>
           </div>
           <div className={styles.postAttribItem}>
             <p>Duration</p>
-            <p>{duration} Months</p>
+            <p>{duration}</p>
           </div>
         </div>
       </div>
@@ -105,12 +105,12 @@ function PostCard({
           ))}
         </div>
         <div className={styles.postChatButton}>
-          <ChatAltIcon style={{ height: '1rem' }} />
+          <ChatAltIcon style={{ height: "1rem" }} />
           <p>message</p>
         </div>
       </div>
       <div className={styles.postLocation}>
-        <LocationMarkerIcon style={{ height: '1rem' }} />
+        <LocationMarkerIcon style={{ height: "1rem" }} />
         <p>{postAddress}</p>
       </div>
     </div>
