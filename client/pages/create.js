@@ -7,6 +7,7 @@ import {
   skills,
   duration,
   university,
+  tags,
 } from "../data/filters";
 import CustomSelect from "../components/CustomSelect";
 
@@ -53,9 +54,11 @@ function create() {
       experience: "",
       duration: "",
       university: "",
+      tags: "",
     },
     validate,
     onSubmit: (value) => {
+      /* ALSO APPEND AUTHOR ID and Profile pic etc */
       console.log(value);
     },
   });
@@ -94,11 +97,10 @@ function create() {
 
                 <CustomSelect
                   options={roles}
-                  isMulti={true}
+                  isMulti={false}
                   value={formik.values.roles}
                   onChange={(e) => {
-                    const value = Array.isArray(e) ? e.map((x) => x.value) : [];
-                    formik.setFieldValue("roles", value);
+                    formik.setFieldValue("roles", e.label);
                   }}
                   placeholder="Frontend Developer..."
                   handleBlur={handleBlur}
@@ -112,7 +114,7 @@ function create() {
                   isMulti={false}
                   value={formik.values.experience}
                   onChange={(e) => {
-                    formik.setFieldValue("experience", e.value);
+                    formik.setFieldValue("experience", e.label);
                   }}
                   handleBlur={handleBlur}
                   placeholder="Beginner, Intermediate..."
@@ -128,7 +130,7 @@ function create() {
                   isMulti={true}
                   value={formik.values.skills}
                   onChange={(e) => {
-                    const value = Array.isArray(e) ? e.map((x) => x.value) : [];
+                    const value = Array.isArray(e) ? e.map((x) => x.label) : [];
                     formik.setFieldValue("skills", value);
                   }}
                   handleBlur={handleBlur}
@@ -143,7 +145,7 @@ function create() {
                   isMulti={false}
                   value={formik.values.duration}
                   onChange={(e) => {
-                    formik.setFieldValue("duration", e.value);
+                    formik.setFieldValue("duration", e.label);
                   }}
                   handleBlur={handleBlur}
                   placeholder="1 Month, 3 Month..."
@@ -159,7 +161,7 @@ function create() {
                   isMulti={false}
                   value={formik.values.university}
                   onChange={(e) => {
-                    formik.setFieldValue("university", e.value);
+                    formik.setFieldValue("university", e.label);
                   }}
                   handleBlur={handleBlur}
                   placeholder="Charusat University, Anand"
@@ -170,6 +172,20 @@ function create() {
                   </div>
                 ) : null}
 
+                <CustomSelect
+                  options={tags}
+                  isMulti={true}
+                  value={formik.values.tags}
+                  onChange={(e) => {
+                    const value = Array.isArray(e) ? e.map((x) => x.label) : [];
+                    formik.setFieldValue("tags", value);
+                  }}
+                  handleBlur={handleBlur}
+                  placeholder="Tags..."
+                />
+                {formik.errors.tags && touched.tags ? (
+                  <div className={styles.formError}>{formik.errors.tags}</div>
+                ) : null}
                 <button type="submit" className={styles.createPostSubmitBtn}>
                   Post
                 </button>
