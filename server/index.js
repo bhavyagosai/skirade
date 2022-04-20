@@ -5,25 +5,11 @@ const {
 const mongoose = require("mongoose");
 // const cors = require("cors");
 
-const resolvers = require("./backend/graphql/resolvers");
-const typeDefs = require("./backend/graphql/typeDefs");
-const { MONGODB } = require("./backend/config");
+const resolvers = require("./graphql/resolvers");
+const typeDefs = require("./graphql/typeDefs");
+const { MONGODB } = require("./config");
 
 const server = new ApolloServer({
-  // cors: false,
-  // cors: {
-  //   credentials: true,
-  //   // origin: (origin, callback) => {
-  //   //   const whitelist = ["http://localhost:5000/", "http://localhost:3000/"];
-
-  //   //   if (whitelist.indexOf(origin) !== -1) {
-  //   //     callback(null, true);
-  //   //   } else {
-  //   //     callback(new Error("Not allowed by CORS"));
-  //   //   }
-  //   // },
-  //   origin: "*",
-  // },
   typeDefs,
   resolvers,
   context: ({ req }) => ({ req }),

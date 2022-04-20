@@ -17,6 +17,28 @@ module.exports = gql`
     createdAt: String!
     profileImage: String!
   }
+  type Post {
+    id: ID!
+    author: String!
+    title: String!
+    description: String!
+    role: String!
+    skills: [String]
+    experience: String!
+    duration: String!
+    university: String!
+    createdAt: String!
+  }
+  input PostInput {
+    author: String!
+    title: String!
+    description: String!
+    role: String!
+    skills: [String]
+    experience: String!
+    duration: String!
+    university: String!
+  }
   input RegisterInput {
     username: String!
     email: String!
@@ -35,10 +57,12 @@ module.exports = gql`
     sayHi: String!
     getUsers: [User]
     getUser(username: String!): User
+    getPosts: [Post]
     persistentLogin: Boolean!
   }
   type Mutation {
     register(registerInput: RegisterInput): User
     login(username: String!, password: String!): User!
+    addPost(postInput: PostInput): Post
   }
 `;

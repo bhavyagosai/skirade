@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
-import AppContext from "../components/AppContext";
+import AppContext from "./AppContext";
 
 export default function Navbar() {
   const router = useRouter();
@@ -81,6 +81,17 @@ export default function Navbar() {
                   alt="Profile"
                   width={50}
                   height={50}
+                  onClick={() => {
+                    router.push(
+                      `/user/${
+                        JSON.parse(localStorage.getItem("UserData")).register
+                          ? JSON.parse(localStorage.getItem("UserData"))
+                              .register.username
+                          : JSON.parse(localStorage.getItem("UserData")).login
+                              .username
+                      }`
+                    );
+                  }}
                   title={
                     JSON.parse(localStorage.getItem("UserData")).register
                       ? JSON.parse(localStorage.getItem("UserData")).register

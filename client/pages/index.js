@@ -1,9 +1,5 @@
 import styles from "../styles/Index.module.css";
-import { useEffect, useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
-import { gql, useMutation, useQuery } from "@apollo/client";
 
 import ChatElement from "../components/ChatElement";
 
