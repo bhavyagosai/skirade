@@ -42,6 +42,8 @@ module.exports = {
       {
         postInput: {
           author,
+          authorName,
+          authorImg,
           title,
           description,
           role,
@@ -49,6 +51,7 @@ module.exports = {
           experience,
           duration,
           university,
+          tags,
         },
       }
     ) {
@@ -58,6 +61,8 @@ module.exports = {
 
       const newPost = new Post({
         author,
+        authorName,
+        authorImg,
         title,
         description,
         role,
@@ -65,6 +70,7 @@ module.exports = {
         experience,
         duration,
         university,
+        tags,
         createdAt: new Date().toISOString(),
       });
 

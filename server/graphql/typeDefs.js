@@ -20,24 +20,30 @@ module.exports = gql`
   type Post {
     id: ID!
     author: String!
+    authorName: String!
+    authorImg: String!
     title: String!
     description: String!
     role: String!
-    skills: [String]
+    skills: [String]!
     experience: String!
     duration: String!
     university: String!
+    tags: [String]
     createdAt: String!
   }
   input PostInput {
     author: String!
+    authorName: String!
+    authorImg: String!
     title: String!
     description: String!
     role: String!
-    skills: [String]
+    skills: [String]!
     experience: String!
     duration: String!
     university: String!
+    tags: [String]
   }
   input RegisterInput {
     username: String!
