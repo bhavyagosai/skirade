@@ -103,6 +103,9 @@ function ExploreFeed({ starredPostId, setStarredPostId }) {
 
   return (
     <div className={styles.postsContainer}>
+      <div className={styles.createPostButtonContainer}>
+        <Link href="/create">New Post +</Link>
+      </div>
       {Posts.map((post) => (
         <PostCard
           key={post.id.toString()}
