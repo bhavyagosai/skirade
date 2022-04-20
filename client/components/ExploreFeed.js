@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "../styles/Index.module.css";
-import Link from "next/link";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
 import PostCard from "./PostCard";
@@ -91,33 +90,28 @@ function ExploreFeed({ starredPostId, setStarredPostId }) {
   ];
 
   return (
-    <>
-      <div className={styles.postsContainer}>
-        <div className={styles.createPostButtonContainer}>
-          <Link href="/create">New Post +</Link>
-        </div>
-        {posts.map((post) => (
-          <PostCard
-            key={post.id.toString()}
-            postId={post.id}
-            profileImg={post.profileImg}
-            name={post.name}
-            username={post.username}
-            timestamp={post.timestamp}
-            title={post.title}
-            desc={post.desc}
-            role={post.role}
-            experience={post.experience}
-            skills={post.skills}
-            duration={post.duration}
-            tags={post.tags}
-            postAddress={post.address}
-            starredPostId={starredPostId}
-            setStarredPostId={setStarredPostId}
-          />
-        ))}
-      </div>
-    </>
+    <div className={styles.postsContainer}>
+      {posts.map((post) => (
+        <PostCard
+          key={post.id.toString()}
+          postId={post.id}
+          profileImg={post.profileImg}
+          name={post.name}
+          username={post.username}
+          timestamp={post.timestamp}
+          title={post.title}
+          desc={post.desc}
+          role={post.role}
+          experience={post.experience}
+          skills={post.skills}
+          duration={post.duration}
+          tags={post.tags}
+          postAddress={post.address}
+          starredPostId={starredPostId}
+          setStarredPostId={setStarredPostId}
+        />
+      ))}
+    </div>
   );
 }
 

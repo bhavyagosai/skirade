@@ -274,22 +274,6 @@
 
 /* ---------------------------- POSTS ------------------------- */
 
-.createPostButtonContainer{
-  width: 100%;
-}
-
-.createPostButtonContainer a{
-  background-color: #2d4168;
-  padding: 10px;
-  color: white;
-  margin-left: 30px;
-  border-radius: 8px;
-}
-
-.createPostButtonContainer a:hover{
-  background-color: #3a5282;
-}
-
 .postsContainer {
   display: flex;
   flex-direction: column;
@@ -454,18 +438,15 @@
 }
 
 .starredPostList {
-  display: flex;
-  flex-direction: column;
   margin-top: 10px;
 }
-.starredPostList a {
+.starredPostList p {
   font-size: 1.3rem;
   padding-top: 10px;
 }
 
-.starredPostList a:hover {
+.starredPostList p:hover {
   cursor: pointer;
-  font-weight:500;
 }
 
 /* ---------------------------- CREATE POST FORM ------------------- */

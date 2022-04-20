@@ -33,29 +33,4 @@ const university = [
   { label: "NIT Surat", value: 4 },
 ];
 
-const tags = [
-  { label: "React.js", value: 1 },
-  { label: "Javascript", value: 2 },
-  { label: "C/C++", value: 3 },
-  { label: "Typescript", value: 4 },
-  { label: "After Effects", value: 5 },
-  { label: "Adobe Photoshop", value: 6 },
-  { label: "Python", value: 7 },
-  { label: "Cloud Computing", value: 8 },
-  { label: "Google Cloud", value: 9 },
-  { label: "Flutter", value: 10 },
-  { label: "Kotlin", value: 11 },
-  { label: "Android", value: 12 },
-  { label: "Java", value: 13 },
-  { label: "Oracle", value: 14 },
-  { label: "DBMS", value: 15 },
-  { label: "MySQL", value: 16 },
-  { label: "PostGre", value: 17 },
-  { label: "UI/UX", value: 18 },
-  { label: "Graphic Designing", value: 19 },
-  { label: "Animation", value: 20 },
-  { label: "Video Editing", value: 21 },
-  { label: "3D", value: 22 },
-];
-
-export { duration, skills, roles, university, experience, tags };
+export { duration, skills, roles, university, experience };
