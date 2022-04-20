@@ -21,23 +21,23 @@ function FilterSideBar() {
   const [selectedUniversity, setSelectedUniversity] = useState(null);
 
   const rolesFilterUpdate = (e) => {
-    setSelectedRoles(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setSelectedRoles(Array.isArray(e) ? e.map((x) => x.label) : []);
   };
 
   const skillsFilterUpdate = (e) => {
-    setSelectedSkills(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setSelectedSkills(Array.isArray(e) ? e.map((x) => x.label) : []);
   };
 
   const experienceFilterUpdate = (e) => {
-    setSelectedExperience(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setSelectedExperience(e.label);
   };
 
   const durationFilterUpdate = (e) => {
-    setSelectedDuration(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setSelectedDuration(e.label);
   };
 
   const universityFilterUpdate = (e) => {
-    setSelectedUniversity(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setSelectedUniversity(e.label);
   };
 
   const customStyles = {
@@ -60,6 +60,17 @@ function FilterSideBar() {
 
       return { ...provided, opacity, transition };
     },
+  };
+
+  const applyFilters = () => {
+    // apply filters functionality
+    console.log({
+      selectedRoles,
+      selectedSkills,
+      selectedExperience,
+      selectedDuration,
+      selectedUniversity,
+    });
   };
 
   return (
@@ -140,7 +151,9 @@ function FilterSideBar() {
         />
       </div>
       <div className={styles.filterFooter}>
-        <button className={styles.filterApplyBtn}>Apply</button>
+        <button className={styles.filterApplyBtn} onClick={applyFilters}>
+          Apply
+        </button>
         <p>reset</p>
       </div>
     </div>
