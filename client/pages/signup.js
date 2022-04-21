@@ -28,6 +28,10 @@ const REGISTER_USER = gql`
       token
       createdAt
       profileImage
+      starredPosts {
+        postID
+        postTitle
+      }
     }
   }
 `;

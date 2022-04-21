@@ -14,6 +14,7 @@ const userSchema = new Schema({
   passingYear: Number,
   createdAt: String,
   profileImage: String,
+  starredPosts: Array,
 });
 
 module.exports = model("User", userSchema);

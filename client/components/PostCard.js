@@ -6,6 +6,29 @@ import {
   LocationMarkerIcon,
 } from "@heroicons/react/solid";
 import { StarIcon as StarIconOutline } from "@heroicons/react/outline";
+import { gql, useMutation } from "@apollo/client";
+
+const STAR_POST = gql`
+  mutation starPost($username: String!, $postID: String!, $postTitle: String!) {
+    starPost(username: $username, postID: $postID, postTitle: $postTitle) {
+      postID
+      postTitle
+    }
+  }
+`;
+
+const UNSTAR_POST = gql`
+  mutation unstarPost(
+    $username: String!
+    $postID: String!
+    $postTitle: String!
+  ) {
+    unstarPost(username: $username, postID: $postID, postTitle: $postTitle) {
+      postID
+      postTitle
+    }
+  }
+`;
 
 function PostCard({
   postId,
@@ -26,16 +49,80 @@ function PostCard({
 }) {
   const [userStarredPosts, setUserStarredPosts] = useState(starredPostId);
 
-  const handleStar = (id) => {
-    setUserStarredPosts((arr) => [...arr, id]);
+  const [starPost, {}] = useMutation(STAR_POST, {
+    onError: (error) => {
+      console.log(error);
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      let userData = JSON.parse(localStorage.getItem("UserData"));
+      userData.register
+        ? userData.register.starredPosts.push(data.starPost)
+        : userData.login.starredPosts.push(data.starPost);
+
+      localStorage.setItem("UserData", JSON.stringify(userData));
+    },
+  });
+
+  const [unstarPost, {}] = useMutation(UNSTAR_POST, {
+    onError: (error) => {
+      console.log(error);
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      let userData = JSON.parse(localStorage.getItem("UserData"));
+      let newUserData = userData.register
+        ? userData.register.starredPosts.filter((starredPost) => {
+            return starredPost.postID !== data.starPost.postID;
+          })
+        : userData.login.starredPosts.filter((starredPost) => {
+            return starredPost.postID !== data.starPost.postID;
+          });
+
+      userData.register
+        ? (userData.register.starredPosts = newUserData)
+        : (userData.login.starredPosts = newUserData);
+        
+      localStorage.setItem("UserData", JSON.stringify(userData));
+    },
+  });
+
+  const handleStar = (id, title) => {
+    setUserStarredPosts((arr) => [...arr, { id, title }]);
     console.log("Starred Post", id);
     // MAKE API CALL FOR STARRING UPDATE IN DB AS WELL
+    starPost({
+      variables: {
+        username: JSON.parse(localStorage.getItem("UserData"))
+          ? JSON.parse(localStorage.getItem("UserData")).register
+            ? JSON.parse(localStorage.getItem("UserData")).register.username
+            : JSON.parse(localStorage.getItem("UserData")).login.username
+          : "dummy",
+        postID: id,
+        postTitle: title,
+      },
+    }).catch((error) => {
+      console.log(error);
+    });
   };
 
-  const handleUnstar = (id) => {
-    setUserStarredPosts(userStarredPosts.filter((item) => item !== id));
+  const handleUnstar = (id, title) => {
+    setUserStarredPosts(userStarredPosts.filter((item) => item.postID !== id));
     console.log("UnStarred Post", id);
     // MAKE API CALL FOR STARRING UPDATE IN DB AS WELL
+    unstarPost({
+      variables: {
+        username: JSON.parse(localStorage.getItem("UserData"))
+          ? JSON.parse(localStorage.getItem("UserData")).register
+            ? JSON.parse(localStorage.getItem("UserData")).register.username
+            : JSON.parse(localStorage.getItem("UserData")).login.username
+          : "dummy",
+        postID: id,
+        postTitle: title,
+      },
+    }).catch((error) => {
+      console.log(error);
+    });
   };
   useEffect(() => {
     setStarredPostId(userStarredPosts);
@@ -51,7 +138,7 @@ function PostCard({
         </div>
         {userStarredPosts.includes(postId) ? (
           <StarIconSolid
-            onClick={() => handleUnstar(postId)}
+            onClick={() => handleUnstar(postId, title)}
             style={{
               height: "1rem",
               position: "absolute",
@@ -61,7 +148,7 @@ function PostCard({
           />
         ) : (
           <StarIconOutline
-            onClick={() => handleStar(postId)}
+            onClick={() => handleStar(postId, title)}
             style={{
               height: "1rem",
               position: "absolute",

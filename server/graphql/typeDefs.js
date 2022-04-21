@@ -1,6 +1,10 @@
 const { gql } = require("apollo-server");
 
 module.exports = gql`
+  type StarredPost {
+    postID: String!
+    postTitle: String!
+  }
   type User {
     id: ID!
     email: String!
@@ -16,6 +20,7 @@ module.exports = gql`
     passingYear: Int!
     createdAt: String!
     profileImage: String!
+    starredPosts: [StarredPost]
   }
   type Post {
     id: ID!
@@ -70,5 +75,15 @@ module.exports = gql`
     register(registerInput: RegisterInput): User
     login(username: String!, password: String!): User!
     addPost(postInput: PostInput): Post
+    starPost(
+      username: String!
+      postID: String!
+      postTitle: String!
+    ): StarredPost!
+    unstarPost(
+      username: String!
+      postID: String!
+      postTitle: String!
+    ): StarredPost!
   }
 `;

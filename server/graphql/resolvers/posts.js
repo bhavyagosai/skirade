@@ -81,5 +81,59 @@ module.exports = {
         id: res._id,
       };
     },
+    async starPost(_, { username, postID, postTitle }) {
+      const user = await User.findOne({ username });
+
+      if (!user) throw new ApolloError("User does not exist");
+
+      user.starredPosts.map((starredPost) => {
+        if (starredPost.postID === postID)
+          throw new ApolloError("Post already starred!");
+      });
+
+      user.starredPosts.push({ postID, postTitle });
+
+      await User.findOneAndUpdate(
+        { username: username },
+        {
+          starredPosts: user.starredPosts,
+        },
+        { new: true }
+      );
+
+      return {
+        postID,
+        postTitle,
+      };
+    },
+    async unstarPost(_, { username, postID, postTitle }) {
+      const user = await User.findOne({ username });
+
+      if (!user) throw new ApolloError("User does not exist");
+
+      let check = 0;
+      user.starredPosts.map((starredPost) => {
+        if (starredPost.postID === postID) check = 1;
+      });
+      if (check === 0)
+        throw new ApolloError("Post was never starred in the first place!");
+
+      user.starredPosts = user.starredPosts.filter((starredPost) => {
+        return starredPost.postID !== postID;
+      });
+
+      await User.findOneAndUpdate(
+        { username: username },
+        {
+          starredPosts: user.starredPosts,
+        },
+        { new: true }
+      );
+
+      return {
+        postID,
+        postTitle,
+      };
+    },
   },
 };

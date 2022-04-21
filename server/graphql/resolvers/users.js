@@ -156,6 +156,7 @@ module.exports = {
         institution,
         degree,
         passingYear,
+        starredPosts: [],
         createdAt: new Date().toISOString(),
         profileImage: `https://avatars.dicebear.com/api/micah/${username}.svg`,
       });
