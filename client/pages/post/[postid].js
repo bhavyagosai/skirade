@@ -9,15 +9,48 @@ import {
 } from "@heroicons/react/solid";
 import { StarIcon as StarIconOutline } from "@heroicons/react/outline";
 
+const GET_POST = gql`
+  query getPost($postID: String!) {
+    getPost(postID: $postID) {
+      id
+      author
+      authorName
+      authorImg
+      title
+      description
+      role
+      skills
+      experience
+      duration
+      university
+      tags
+      createdAt
+    }
+  }
+`;
+
 // get post id from the params
 function postPage() {
+  const [postData, setPostData] = useState({});
+
+  //   implement the star and unstar post functinality just like in explore page
+  const [starredPostId, setStarredPostId] = useState([1, 3]);
+
   const router = useRouter();
   const {
     query: { postid },
   } = router;
 
-  //   implement the star and unstar post functinality just like in explore page
-  const [starredPostId, setStarredPostId] = useState([1, 3]);
+  const { error, data, loading } = useQuery(GET_POST, {
+    variables: { postID: postid },
+    skip: postid ? false : true,
+    onError: (error) => {
+      console.log(error);
+    },
+    onCompleted: (data) => {
+      setPostData(data.getPost);
+    },
+  });
 
   const handleStar = (id) => {
     setUserStarredPosts((arr) => [...arr, id]);
@@ -32,7 +65,7 @@ function postPage() {
   };
   useEffect(() => {
     setStarredPostId(starredPostId);
-  }, [setStarredPostId, starredPostId]);
+  }, [setStarredPostId, starredPostId, postid]);
 
   const post = {
     id: 1,
@@ -54,12 +87,12 @@ function postPage() {
     <div className={styles.container}>
       <div className={styles.postContainer}>
         <div className={styles.postProfile}>
-          <img src={post.authorImg} alt="" className={styles.roundedFull} />
+          <img src={postData.authorImg} alt="" className={styles.roundedFull} />
           <div className={styles.postProfileName}>
-            <p className="postAuthorName">{post.authorName}</p>
-            <span className="postAuthorUsername">@{post.author}</span>
+            <p className="postAuthorName">{postData.authorName}</p>
+            <span className="postAuthorUsername">@{postData.author}</span>
           </div>
-          {starredPostId.includes(post.id) ? (
+          {starredPostId.includes(postData.id) ? (
             <StarIconSolid
               onClick={() => handleUnstar(post.id)}
               style={{
@@ -71,7 +104,7 @@ function postPage() {
             />
           ) : (
             <StarIconOutline
-              onClick={() => handleStar(post.id)}
+              onClick={() => handleStar(postData.id)}
               style={{
                 height: "1rem",
                 position: "absolute",
@@ -82,32 +115,32 @@ function postPage() {
           )}
         </div>
         <div className={styles.postDate}>
-          <p>{post.timestamp}</p>
+          <p>{postData.createdAt}</p>
         </div>
-        <p className={styles.postTitle}>{post.title}</p>
-        <p className={styles.postDesc}>{post.desc}</p>
+        <p className={styles.postTitle}>{postData.title}</p>
+        <p className={styles.postDesc}>{postData.description}</p>
         <div className={styles.postAttribs}>
           <div className={styles.postAttribItem}>
             <p>Role</p>
-            <p>{post.role}</p>
+            <p>{postData.role}</p>
           </div>
           <div className={styles.postAttribItem}>
             <p>Experience</p>
-            <p>{post.experience}</p>
+            <p>{postData.experience}</p>
           </div>
 
           <div className={styles.postAttribItem}>
             <p>Skills</p>
-            <p>{post.skills.join(", ")}</p>
+            <p>{postData.skills?.join(", ")}</p>
           </div>
           <div className={styles.postAttribItem}>
             <p>Duration</p>
-            <p>{post.duration}</p>
+            <p>{postData.duration}</p>
           </div>
         </div>
         <div className={styles.postFooter}>
           <div className={styles.postTags}>
-            {post.tags.map((e) => (
+            {postData.tags?.map((e) => (
               <p className={styles.postTag}>{e}</p>
             ))}
           </div>
@@ -118,7 +151,7 @@ function postPage() {
         </div>
         <div className={styles.postLocation}>
           <LocationMarkerIcon style={{ height: "1rem" }} />
-          <p>{post.university}</p>
+          <p>{postData.university}</p>
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import React from "react";
 import { Field, Formik, useFormik } from "formik";
+import { gql, useMutation, useQuery } from "@apollo/client";
+
 import styles from "../styles/Index.module.css";
 import {
   roles,
@@ -10,6 +12,26 @@ import {
   tags,
 } from "../data/filters";
 import CustomSelect from "../components/CustomSelect";
+
+const ADD_POST = gql`
+  mutation addPost($postInput: PostInput) {
+    addPost(postInput: $postInput) {
+      id
+      author
+      authorName
+      authorImg
+      title
+      description
+      role
+      skills
+      experience
+      duration
+      university
+      tags
+      createdAt
+    }
+  }
+`;
 
 function create() {
   const validate = (values) => {
@@ -45,6 +67,16 @@ function create() {
     return errors;
   };
 
+  const [addPost, { error, data, loading }] = useMutation(ADD_POST, {
+    onError: (error) => {
+      console.log(error);
+    },
+    onCompleted: (data) => {
+      console.log("Post Added!");
+      // console.log("User Logged in!\n" + JSON.stringify(data));
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -59,7 +91,40 @@ function create() {
     validate,
     onSubmit: (value) => {
       /* ALSO APPEND AUTHOR ID and Profile pic etc */
-      console.log(value);
+      // console.log(value);
+      addPost({
+        variables: {
+          postInput: {
+            author: localStorage.getItem("UserData")
+              ? JSON.parse(localStorage.getItem("UserData")).register
+                ? JSON.parse(localStorage.getItem("UserData")).register.username
+                : JSON.parse(localStorage.getItem("UserData")).login.username
+              : "dummy",
+            authorName: localStorage.getItem("UserData")
+              ? JSON.parse(localStorage.getItem("UserData")).register
+                ? JSON.parse(localStorage.getItem("UserData")).register.name
+                : JSON.parse(localStorage.getItem("UserData")).login.name
+              : "dummy",
+            authorImg: localStorage.getItem("UserData")
+              ? JSON.parse(localStorage.getItem("UserData")).register
+                ? JSON.parse(localStorage.getItem("UserData")).register
+                    .profileImage
+                : JSON.parse(localStorage.getItem("UserData")).login
+                    .profileImage
+              : "dummy",
+            title: value.title,
+            description: value.desc,
+            role: value.roles,
+            skills: value.skills,
+            experience: value.experience,
+            duration: value.duration,
+            university: value.university,
+            tags: value.tags,
+          },
+        },
+      }).catch((error) => {
+        console.log(error);
+      });
     },
   });
   return (

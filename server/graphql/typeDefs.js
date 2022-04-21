@@ -86,6 +86,7 @@ module.exports = gql`
     sayHi: String!
     getUsers: [User]
     getUser(username: String!): User
+    getPost(postID: String!): Post
     getPosts: [Post]
     filterPosts(
       selectedUniversity: String

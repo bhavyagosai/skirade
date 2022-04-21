@@ -23,18 +23,18 @@ module.exports = {
         throw new Error(error);
       }
     },
-    // async getPost(_, { username }) {
-    //   try {
-    //     const user = await User.findOne({ username });
-    //     if (user) {
-    //       return user;
-    //     } else {
-    //       throw new Error(`User ${username} does not exist`);
-    //     }
-    //   } catch (error) {
-    //     throw new Error(error);
-    //   }
-    // },
+    async getPost(_, { postID }) {
+      try {
+        const post = await Post.findOne({ postID });
+        if (post) {
+          return post;
+        } else {
+          throw new Error(`Post does not exist`);
+        }
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
     async filterPosts(
       _,
       {

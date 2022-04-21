@@ -13,11 +13,7 @@ function usernamePage() {
     query: { username },
   } = router;
 
-  let uservalue = username;
-
-  useEffect(() => {
-    console.log(uservalue);
-  }, [username]);
+  useEffect(() => {}, [username]);
 
   const GET_USER = gql`
     query getUsers($username: String!) {
