@@ -451,10 +451,12 @@
 
 .starSidebarHeader {
   display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
-.starredPostList {
+
+.starredPostList{
   display: flex;
   flex-direction: column;
   margin-top: 10px;

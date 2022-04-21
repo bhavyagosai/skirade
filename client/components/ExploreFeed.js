@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../styles/Index.module.css";
 import Link from "next/link";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import AppContext from "./AppContext";
 
 import PostCard from "./PostCard";
 
@@ -99,11 +100,15 @@ function ExploreFeed({ starredPostId, setStarredPostId, posts, setPosts }) {
   //   },
   // ];
 
+  const { user, dispatch } = React.useContext(AppContext);
+
   return (
     <div className={styles.postsContainer}>
-      <div className={styles.createPostButtonContainer}>
-        <Link href="/create">New Post +</Link>
-      </div>
+      {user.loggedIn === true && (
+        <div className={styles.createPostButtonContainer}>
+          <Link href="/create">New Post +</Link>
+        </div>
+      )}
       {Posts.map((post) => (
         <PostCard
           key={post.id.toString()}

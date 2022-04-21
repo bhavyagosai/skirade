@@ -63,10 +63,14 @@ export default function Navbar() {
           {user.loggedIn === false ? (
             <>
               <li>
-                <Link href="/signup">signup</Link>
+                <Link href="/signup">
+                  <a>signup</a>
+                </Link>
               </li>
               <li>
-                <Link href="/login">login</Link>
+                <Link href="/login">
+                  <a>login</a>
+                </Link>
               </li>
             </>
           ) : (
