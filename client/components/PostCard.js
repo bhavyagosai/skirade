@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import styles from "../styles/Index.module.css";
 import {
   ChatAltIcon,
@@ -7,6 +8,7 @@ import {
 } from "@heroicons/react/solid";
 import { StarIcon as StarIconOutline } from "@heroicons/react/outline";
 import { gql, useMutation } from "@apollo/client";
+import AppContext from "./AppContext";
 
 const STAR_POST = gql`
   mutation starPost($username: String!, $postID: String!, $postTitle: String!) {
@@ -47,6 +49,8 @@ function PostCard({
   starredPostId,
   setStarredPostId,
 }) {
+  const { user, dispatch } = React.useContext(AppContext);
+
   const [userStarredPosts, setUserStarredPosts] = useState(starredPostId);
 
   const [starPost, {}] = useMutation(STAR_POST, {
@@ -61,6 +65,7 @@ function PostCard({
         : userData.login.starredPosts.push(data.starPost);
 
       localStorage.setItem("UserData", JSON.stringify(userData));
+      setIsStarred(true);
     },
   });
 
@@ -73,17 +78,21 @@ function PostCard({
       let userData = JSON.parse(localStorage.getItem("UserData"));
       let newUserData = userData.register
         ? userData.register.starredPosts.filter((starredPost) => {
-            return starredPost.postID !== data.starPost.postID;
+            return starredPost.postID !== data.unstarPost.postID;
           })
         : userData.login.starredPosts.filter((starredPost) => {
-            return starredPost.postID !== data.starPost.postID;
+            return starredPost.postID !== data.unstarPost.postID;
           });
+
+      console.log(newUserData);
 
       userData.register
         ? (userData.register.starredPosts = newUserData)
         : (userData.login.starredPosts = newUserData);
-        
+
+      console.log(userData);
       localStorage.setItem("UserData", JSON.stringify(userData));
+      setIsStarred(false);
     },
   });
 
@@ -128,6 +137,14 @@ function PostCard({
     setStarredPostId(userStarredPosts);
   }, [setStarredPostId, userStarredPosts]);
 
+  const [isStarred, setIsStarred] = useState(false);
+  useEffect(() => {
+    var ans = starredPostId.find(function (e) {
+      return e.postID === postId;
+    });
+    if (ans) setIsStarred(true);
+  }, [starredPostId, isStarred]);
+
   return (
     <div className={styles.postContainer}>
       <div className={styles.postProfile}>
@@ -136,27 +153,29 @@ function PostCard({
           <p className="postAuthorName">{name}</p>
           <span className="postAuthorUsername">@{username}</span>
         </div>
-        {userStarredPosts.includes(postId) ? (
-          <StarIconSolid
-            onClick={() => handleUnstar(postId, title)}
-            style={{
-              height: "1rem",
-              position: "absolute",
-              right: "0px",
-              top: "10px",
-            }}
-          />
-        ) : (
-          <StarIconOutline
-            onClick={() => handleStar(postId, title)}
-            style={{
-              height: "1rem",
-              position: "absolute",
-              right: "0px",
-              top: "10px",
-            }}
-          />
-        )}
+        {user.loggedIn === true ? (
+          isStarred ? (
+            <StarIconSolid
+              onClick={() => handleUnstar(postId, title)}
+              style={{
+                height: "1rem",
+                position: "absolute",
+                right: "0px",
+                top: "10px",
+              }}
+            />
+          ) : (
+            <StarIconOutline
+              onClick={() => handleStar(postId, title)}
+              style={{
+                height: "1rem",
+                position: "absolute",
+                right: "0px",
+                top: "10px",
+              }}
+            />
+          )
+        ) : null}
       </div>
       <div className={styles.postDate}>
         <p>{timestamp}</p>
@@ -188,7 +207,9 @@ function PostCard({
       <div className={styles.postFooter}>
         <div className={styles.postTags}>
           {tags.map((e) => (
-            <p className={styles.postTag}>{e}</p>
+            <p key={e} className={styles.postTag}>
+              {e}
+            </p>
           ))}
         </div>
         <div className={styles.postChatButton}>
