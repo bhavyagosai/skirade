@@ -73,16 +73,16 @@ function PostCard({
       let userData = JSON.parse(localStorage.getItem("UserData"));
       let newUserData = userData.register
         ? userData.register.starredPosts.filter((starredPost) => {
-            return starredPost.postID !== data.starPost.postID;
+            return starredPost.postID !== data.unstarPost.postID;
           })
         : userData.login.starredPosts.filter((starredPost) => {
-            return starredPost.postID !== data.starPost.postID;
+            return starredPost.postID !== data.unstarPost.postID;
           });
 
       userData.register
         ? (userData.register.starredPosts = newUserData)
         : (userData.login.starredPosts = newUserData);
-        
+
       localStorage.setItem("UserData", JSON.stringify(userData));
     },
   });

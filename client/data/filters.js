@@ -1,7 +1,7 @@
 const duration = [
-  { label: "1 Month", value: 1 },
-  { label: "3 Month", value: 2 },
-  { label: "6 Month", value: 3 },
+  { label: "1 Months", value: 1 },
+  { label: "3 Months", value: 2 },
+  { label: "6 Months", value: 3 },
 ];
 
 const experience = [
@@ -29,7 +29,7 @@ const roles = [
 const university = [
   { label: "Charusat University, Anand", value: 1 },
   { label: "VIT Chennai", value: 2 },
-  { label: "IIT London", value: 3 },
+  { label: "IIT Delhi", value: 3 },
   { label: "NIT Surat", value: 4 },
 ];
 

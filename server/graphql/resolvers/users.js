@@ -98,6 +98,15 @@ module.exports = {
           institution,
           degree,
           passingYear,
+          github,
+          linkedin,
+          twitter,
+          instagram,
+          title,
+          about,
+          skills,
+          languages,
+          // experience
         },
       }
     ) {
@@ -157,6 +166,14 @@ module.exports = {
         degree,
         passingYear,
         starredPosts: [],
+        github,
+        linkedin,
+        twitter,
+        instagram,
+        title,
+        about,
+        skills,
+        languages,
         createdAt: new Date().toISOString(),
         profileImage: `https://avatars.dicebear.com/api/micah/${username}.svg`,
       });

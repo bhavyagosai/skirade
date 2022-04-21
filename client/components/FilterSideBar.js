@@ -9,7 +9,9 @@ import {
   experience,
 } from "../data/filters";
 
-function FilterSideBar() {
+function FilterSideBar({ posts, setPosts }) {
+  const [Posts, setInsidePosts] = useState([]);
+
   const [selectedRoles, setSelectedRoles] = useState(null);
 
   const [selectedSkills, setSelectedSkills] = useState(null);
@@ -19,6 +21,11 @@ function FilterSideBar() {
   const [selectedDuration, setSelectedDuration] = useState(null);
 
   const [selectedUniversity, setSelectedUniversity] = useState(null);
+
+  useEffect(() => {
+    setInsidePosts(posts);
+    // console.log(Posts);
+  }, [posts, Posts]);
 
   const rolesFilterUpdate = (e) => {
     setSelectedRoles(Array.isArray(e) ? e.map((x) => x.label) : []);
@@ -64,6 +71,12 @@ function FilterSideBar() {
 
   const applyFilters = () => {
     // apply filters functionality
+    // console.log(posts);
+    let filteredPosts = Posts.filter((post) => {
+      return post.university === selectedUniversity;
+    });
+    setPosts(filteredPosts);
+    // setInsidePosts(filteredPosts);
     console.log({
       selectedRoles,
       selectedSkills,
@@ -71,6 +84,9 @@ function FilterSideBar() {
       selectedDuration,
       selectedUniversity,
     });
+
+    console.log(Posts);
+    console.log(posts);
   };
 
   return (

@@ -25,31 +25,29 @@ const GET_POSTS = gql`
   }
 `;
 
-function ExploreFeed({ starredPostId, setStarredPostId }) {
-  const [Posts, setPosts] = useState([]);
+function ExploreFeed({ starredPostId, setStarredPostId, posts, setPosts }) {
+  const [Posts, setInsidePosts] = useState([]);
 
-  // useEffect(() => {
-  //   Posts.map((post) => {
-  //     console.log(post.id);
-  //   });
-  // }, [Posts]);
+  useEffect(() => {
+    setInsidePosts(posts);
+  }, [Posts, posts]);
 
   // MAKE API CALL FOR POSTS
-  const { error, data, loading } = useQuery(GET_POSTS, {
-    onError: (error) => {
-      console.log(error);
-    },
-    onCompleted: (data) => {
-      console.log("Posts Fetched!");
-      // console.log(data.getPosts);
-      setPosts(data.getPosts);
-      // console.log(Posts);
-      // dispatch({
-      //   type: "AUTH_STATE_CHANGE",
-      //   loggedIn: true,
-      // });
-    },
-  });
+  // const { error, data, loading } = useQuery(GET_POSTS, {
+  //   onError: (error) => {
+  //     console.log(error);
+  //   },
+  //   onCompleted: (data) => {
+  //     console.log("Posts Fetched!");
+  //     // console.log(data.getPosts);
+  //     setPosts(data.getPosts);
+  //     // console.log(Posts);
+  //     // dispatch({
+  //     //   type: "AUTH_STATE_CHANGE",
+  //     //   loggedIn: true,
+  //     // });
+  //   },
+  // });
 
   // const posts = [
   //   {

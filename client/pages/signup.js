@@ -32,6 +32,14 @@ const REGISTER_USER = gql`
         postID
         postTitle
       }
+      github
+      linkedin
+      twitter
+      instagram
+      title
+      about
+      skills
+      languages
     }
   }
 `;

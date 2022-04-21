@@ -15,6 +15,15 @@ const userSchema = new Schema({
   createdAt: String,
   profileImage: String,
   starredPosts: Array,
+  github: String,
+  linkedin: String,
+  twitter: String,
+  instagram: String,
+  title: String,
+  about: String,
+  skills: Array,
+  languages: Array,
+  // experience
 });
 
 module.exports = model("User", userSchema);
