@@ -21,6 +21,15 @@ module.exports = gql`
     createdAt: String!
     profileImage: String!
     starredPosts: [StarredPost]
+    github: String
+    linkedin: String
+    twitter: String
+    instagram: String
+    title: String
+    about: String
+    skills: [String]
+    languages: [String]
+    # experience
   }
   type Post {
     id: ID!
@@ -63,12 +72,28 @@ module.exports = gql`
     institution: String!
     degree: String!
     passingYear: String!
+    github: String
+    linkedin: String
+    twitter: String
+    instagram: String
+    title: String
+    about: String
+    skills: [String]
+    languages: [String]
+    # experience
   }
   type Query {
     sayHi: String!
     getUsers: [User]
     getUser(username: String!): User
     getPosts: [Post]
+    filterPosts(
+      selectedUniversity: String
+      selectedDuration: String
+      selectedExperience: String
+      selectedRoles: [String]
+      selectedSkills: [String]
+    ): [Post]
     persistentLogin: Boolean!
   }
   type Mutation {

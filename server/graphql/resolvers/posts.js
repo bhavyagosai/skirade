@@ -35,6 +35,47 @@ module.exports = {
     //     throw new Error(error);
     //   }
     // },
+    async filterPosts(
+      _,
+      {
+        selectedUniversity,
+        selectedDuration,
+        selectedExperience,
+        selectedRoles,
+        selectedSkills,
+      }
+    ) {
+      try {
+        const query = {};
+
+        if (selectedUniversity) {
+          query["university"] = selectedUniversity;
+        }
+        if (selectedExperience) {
+          query["experience"] = selectedExperience;
+        }
+        if (selectedDuration) {
+          query["duration"] = selectedDuration;
+        }
+        // if (selectedRoles) {
+        //   query["roles"] = selectedRoles;
+        // }
+        // if (selectedSkills) {
+        //   query["skills"] = selectedSkills;
+        // }
+        console.log(query);
+
+        // Post.aggregate()
+        //   .match(query)
+        //   .exec((ok) => console.log(ok));
+
+        const filterPosts = await Post.find(query);
+        return filterPosts;
+        // universityPosts.getFilter();
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
   Mutation: {
     async addPost(

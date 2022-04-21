@@ -89,8 +89,6 @@ function PostCard({
       userData.register
         ? (userData.register.starredPosts = newUserData)
         : (userData.login.starredPosts = newUserData);
-
-      console.log(userData);
       localStorage.setItem("UserData", JSON.stringify(userData));
       setIsStarred(false);
     },
