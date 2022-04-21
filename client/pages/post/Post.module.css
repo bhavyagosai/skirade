@@ -1,0 +1,152 @@
+.container {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  
+  .postContainer {
+    width: 50%;
+    padding: 1.25rem;
+    background-color: white;
+    margin-top: 30px;
+    border-radius: 0.7rem;
+    box-shadow: 12px 21px 41px rgba(0, 0, 0, 0.05);
+  }
+  .roundedFull {
+    border-radius: 9999px;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+  }
+  
+  .postProfile {
+    display: flex;
+    position: relative;
+  }
+  
+  .postProfile:hover {
+    cursor: pointer;
+  }
+  
+  .postProfileName {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .postProfileName p {
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  
+  .postProfileName span {
+    font-weight: 400;
+    font-size: 0.6rem;
+    margin: 0;
+  }
+  
+  .postDate {
+    margin-top: 10px;
+  }
+  
+  .postDate p {
+    color: #7a7a7a;
+    font-size: 0.6rem;
+  }
+  
+  .postTitle {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+  
+  .postAttribs {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .postAttribRow {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .postAttribItem {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    display: flex;
+  }
+  
+  .postAttribItem :nth-child(1) {
+    font-weight: 600;
+  }
+  
+  .postAttribItem :nth-child(2) {
+    margin-left: 5px;
+  }
+  
+  .postDesc {
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+  
+  .postLocation {
+    display: flex;
+    margin-top: 15px;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .postLocation p {
+    font-size: 0.9rem;
+    margin-left: 5px;
+  }
+  
+  .postFooter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  .postTags {
+    display: flex;
+    font-size: 0.6em;
+    align-items: center;
+  }
+  
+  .postTag {
+    background-color: #12957d;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 3px;
+    margin-right: 10px;
+  }
+  
+  .postTag:hover {
+    cursor: pointer;
+  }
+  
+  .postChatButton {
+    align-items: center;
+    display: flex;
+    background-color: #2d4168;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .postChatButton p {
+    font-size: 0.7rem;
+    margin: 0;
+    margin-left: 5px;
+  }
+  
+  .postChatButton:hover {
+    cursor: pointer;
+  }
